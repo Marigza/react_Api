@@ -1,0 +1,20 @@
+.button {
+  margin: 100px auto;
+  font-family: 'exo-2';
+  font-size: 14px;
+  font-weight: 600;
+  color: #545454;
+  padding: 15px 60px;
+  display: block;
+  align-self: flex-start;
+  border-radius: 8px;
+  border: none;
+  background-color: #b6b6b6;
+  cursor: pointer;
+}
+
+.button:hover {
+  box-shadow:
+    0 -8px 3px -4px #000000 inset,
+    0 8px 3px -4px #ffffff inset;
+}
