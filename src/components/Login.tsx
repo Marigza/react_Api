@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
 import './Login.scss';
-import getToken from '../client_Api';
+import { getToken, getProject } from '../client_Api';
 
 const Login: FC = () => {
-  const validation = () => {
-    getToken();
-
+  const validation = async () => {
+    const responce = await getToken();
+    getProject(responce);
     return;
   };
 

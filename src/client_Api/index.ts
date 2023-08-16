@@ -1,3 +1,6 @@
+import { IgetProject } from './types';
+
+const projectKey: string = 'just-develop23';
 const clientId: string = 'Y9pvMOb17U_r6UZgw88xMLfc';
 const clientSecret: string = 'CTSei9hn6l50tkMSS7ewfHT9fLzLJ_F7';
 const region: string = 'europe-west1.gcp';
@@ -6,13 +9,41 @@ const scope: string[] = [
 ];
 
 export const getToken = async () => {
-  const baseUrl = `https://${clientId}:${clientSecret}@auth.${region}.commercetools.com/oauth/token?grant_type=client_credentials
-  &scope=${scope}`;
-  const response: Response = await fetch(baseUrl, { method: 'POST' });
-  console.log(response);
+  const baseUrl = `https://auth.${region}.commercetools.com/oauth/token`;
+  const requestBody = `grant_type=client_credentials&scope=${scope.join(' ')}`;
+
+  const response = await fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+    },
+    body: requestBody,
+  });
+
+  const responseData = await response.json();
+  console.log(responseData);
+  return responseData;
 };
 
-export default getToken;
+export const getProject = async (obj: IgetProject) => {
+  const baseUrl = `https://api.${region}.commercetools.com/${projectKey}/`;
+  // const requestBody = `grant_type=client_credentials&scope=${scope.join(' ')}`;
 
-// "https://auth.europe-west1.gcp.commercetools.com/oauth/token"
-// `https://${clientId}:${clientSecret}@auth.${region}.commercetools.com/oauth/token`
+  const response = await fetch(baseUrl, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `${obj.token_type} ${obj.access_token}`,
+    },
+    // body: requestBody,
+  });
+
+  const responseData = await response.json();
+  console.log(responseData);
+};
+
+/*
+при втором запросе появляется ошибка: 'Insufficient scope. One of the following scopes is missing: view_project_settings.
+Я так понял скоуп нужно кудато вставить или именносвойство "view_project_settings"..., только я не знаю куда...
+*/
