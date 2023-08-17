@@ -27,7 +27,7 @@ export const getToken = async () => {
 };
 
 export const setInProject = async (objToken: IgetProject, endPath: string, body: string) => {
-  const baseUrl = `https://api.${region}.commercetools.com/${projectKey}/`;
+  const baseUrl = `https://api.${region}.commercetools.com/${projectKey}/${endPath}`;
 
   const response = await fetch(baseUrl, {
     method: 'POST',
